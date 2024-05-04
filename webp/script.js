@@ -5,6 +5,9 @@ let v;
 let xv = 1;
 let yv = 1;
 
+let warning = document.getElementById('warning');
+div.style.display = "none";
+
 let div = document.getElementById('container');
 div.style.display = "block";
 
@@ -21,7 +24,7 @@ function step(){
   if(y+yv >= bottomBound) yv = -v;
   if(x+xv <= 0) xv = v;
   if(y+yv <= 0) yv = v;
-  
+
   x += xv;
   y += yv;
   placeDiv(x, y, div);

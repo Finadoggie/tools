@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Bulk convert WebP to PNG</title>
@@ -79,67 +79,68 @@
         margin-bottom: 25px;
       }
     </style>
-  </head>
+</head>
 
-  <body>
+<body>
+    <span id="warning">Turn on js</span>
     <div class="container" id="container">
-      <h1>WebP to PNG Converter</h1>
-      <div class="desc">Free online tool to convert webp to png
-      <h3 style="padding:0;font-size:10px;margin:0px;">you can do multiple images at the same time</h3></div>
-      <input type="file" id="fileInput" accept=".webp" multiple />
-      <button id="convertButton">Convert to PNG</button>
-      
-      <div id="output"></div>
-      <button id="cleanupButton">Cleanup</button>
+        <h1>WebP to PNG Converter</h1>
+        <div class="desc">Free online tool to convert webp to png
+        <h3 style="padding:0;font-size:10px;margin:0px;">you can do multiple images at the same time</h3></div>
+        <input type="file" id="fileInput" accept=".webp" multiple />
+        <button id="convertButton">Convert to PNG</button>
+
+        <div id="output"></div>
+        <button id="cleanupButton">Cleanup</button>
     </div>
     <script src="script.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
         const fileInput = document.getElementById('fileInput');
         const convertButton = document.getElementById('convertButton');
         const cleanupButton = document.getElementById('cleanupButton');
         const outputDiv = document.getElementById('output');
         cleanupButton.addEventListener('click', function () {
-          outputDiv.innerHTML = ''; // Clear previous output
-          cleanupButton.style.display = 'none';
+            outputDiv.innerHTML = ''; // Clear previous output
+            cleanupButton.style.display = 'none';
         });
 
         convertButton.addEventListener('click', function () {
-          const files = fileInput.files;
-          outputDiv.innerHTML = ''; // Clear previous output
-          if (files.length > 0) cleanupButton.style.display = 'unset';
-          for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const reader = new FileReader();
+            const files = fileInput.files;
+            outputDiv.innerHTML = ''; // Clear previous output
+            if (files.length > 0) cleanupButton.style.display = 'unset';
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const reader = new FileReader();
 
-            reader.onload = function (event) {
-              const img = new Image();
-              img.src = event.target.result;
+                reader.onload = function (event) {
+                    const img = new Image();
+                    img.src = event.target.result;
 
-              img.onload = function () {
-                const canvas = document.createElement('canvas');
-                canvas.width = img.width;
-                canvas.height = img.height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    img.onload = function () {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                const outputImg = new Image();
-                outputImg.src = canvas.toDataURL('image/png');
+                        const outputImg = new Image();
+                        outputImg.src = canvas.toDataURL('image/png');
 
-                // Create a download link for the converted PNG
-                const link = document.createElement('a');
-                link.href = outputImg.src;
-                link.download = file.name.replace('.webp', '.png'); // Use the same name, replace extension
-                link.textContent = link.download;
-                outputDiv.appendChild(link);
-                outputDiv.appendChild(document.createElement('br'));
-                outputDiv.appendChild(document.createElement('br'));
-              };
-            };
-            reader.readAsDataURL(file);
-          }
+                        // Create a download link for the converted PNG
+                        const link = document.createElement('a');
+                        link.href = outputImg.src;
+                        link.download = file.name.replace('.webp', '.png'); // Use the same name, replace extension
+                        link.textContent = link.download;
+                        outputDiv.appendChild(link);
+                        outputDiv.appendChild(document.createElement('br'));
+                        outputDiv.appendChild(document.createElement('br'));
+                    };
+                };
+                reader.readAsDataURL(file);
+            }
         });
-      });
+    });
     </script>
-  </body>
+</body>
 </html>
