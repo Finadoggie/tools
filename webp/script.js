@@ -6,7 +6,7 @@ let xv = 1;
 let yv = 1;
 
 let warning = document.getElementById('warning');
-div.style.display = "none";
+warning.style.display = "none";
 
 let div = document.getElementById('container');
 div.style.display = "block";
