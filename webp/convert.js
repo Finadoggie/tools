@@ -1,4 +1,4 @@
-// Converts all files from an <input> tag to output
+// Converts all files from an <input> tag to images
 function convert(input){
     for(const file of input.files){
         convertImage(file);
@@ -28,7 +28,7 @@ function convertImage(file){
 
             const link = document.createElement('a');
             link.href = outputImg.src;
-            link.download = file.name.replace(/(\.[^.]+)$/, '.png');
+            link.download = file.name.replace(/(\.[^.]+)$/, '.png'); // Convert file extension using magic regex I found online
             link.click();
         };
     };
