@@ -5,158 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Bulk convert WebP to PNG</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style>
-        html {
-            width:100%;
-            height:100%;
-        }
-        html, head, body {
-            height: 100%;
-            margin: 0px;
-            padding: 0px;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            display:none;
-            position:absolute;
-            text-align: center;
-            padding: 24px 64px;
-            border: black 4px double;
-            box-shadow: 4px 4px 0px black;
-        }
-
-        .box {
-            position:absolute;
-            border: black 4px double;
-            box-shadow: 4px 4px 0px black;
-            padding: 10px 16px;
-            text-align: center;
-        }
-
-        h1 {
-            margin-top: 24px;
-            margin-bottom: 10px;
-        }
-        h3 {
-            color: #777;
-        }
-
-        input[type='file'] {
-            margin-bottom: 10px;
-        }
-
-        button {
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        button:hover {
-            box-shadow: 0px 0px 4px black;
-            filter: brightness(95%);
-        }
-
-        button#cleanupButton {
-            display: none;
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
-        #output {
-            margin-top: 20px;
-        }
-        div.desc {
-            margin-bottom: 25px;
-        }
-        #mobile {
-            display: none;
-        }
-        @media (max-width: 550px){
-            #container {
-                display: none !important;
-            }
-            #warning {
-                display: none;
-            }
-            #mobile {
-                display: block;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <span id="warning">Turn on js</span>
-    <span id="mobile">no mobile :/</span>
     <div class="container" id="container">
         <h1>WebP to PNG Converter</h1>
         <div class="desc">Free online tool to convert webp to png
-        <h3 style="padding:0;font-size:10px;margin:0px;">you can do multiple images at the same time</h3></div>
-        <input type="file" id="fileInput" accept=".webp" multiple />
-        <button id="convertButton">Convert to PNG</button>
-
+        <h3>be sure to allow downloading multiple files</h3></div>
+        <div id="labelContainer">
+            <label>
+                Add Files
+                <input type="file" id="fileInput" accept=".webp" multiple onchange="convert(this, '#output')"/>
+            </label>
+        </div>
         <div id="output"></div>
-        <button id="cleanupButton">Cleanup</button>
     </div>
-    <script src="script.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const fileInput = document.getElementById('fileInput');
-        const convertButton = document.getElementById('convertButton');
-        const cleanupButton = document.getElementById('cleanupButton');
-        const outputDiv = document.getElementById('output');
-        cleanupButton.addEventListener('click', function () {
-            outputDiv.innerHTML = ''; // Clear previous output
-            cleanupButton.style.display = 'none';
-        });
-
-        convertButton.addEventListener('click', function () {
-            const files = fileInput.files;
-            outputDiv.innerHTML = ''; // Clear previous output
-            if (files.length > 0) cleanupButton.style.display = 'unset';
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                const reader = new FileReader();
-
-                reader.onload = function (event) {
-                    const img = new Image();
-                    img.src = event.target.result;
-
-                    img.onload = function () {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-                        const outputImg = new Image();
-                        outputImg.src = canvas.toDataURL('image/png');
-
-                        // Create a download link for the converted PNG
-                        const link = document.createElement('a');
-                        link.href = outputImg.src;
-                        link.download = file.name.replace('.webp', '.png'); // Use the same name, replace extension
-                        link.textContent = link.download;
-                        outputDiv.appendChild(link);
-                        outputDiv.appendChild(document.createElement('br'));
-                        outputDiv.appendChild(document.createElement('br'));
-                    };
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    });
-    </script>
+    <script src="convert.js"></script>
+    <script src="bounce.js"></script>
 </body>
 </html>

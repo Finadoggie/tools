@@ -5,11 +5,8 @@ let v;
 let xv = 1;
 let yv = 1;
 
-let warning = document.getElementById('warning');
-warning.style.display = "none";
-
 let div = document.getElementById('container');
-div.style.display = "block";
+div.style.display = "flex";
 
 let divWidth = div.offsetWidth;
 
